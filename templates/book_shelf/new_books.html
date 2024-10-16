@@ -1,0 +1,19 @@
+{% extends '../base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block content %}
+    <h1>Книги</h1>
+    <div class="row">
+    {% for book in books %}
+        {% if book.published_date|date:"Y-m-d" > "2020-01-01" %}
+            <div class="book_info">
+                <h5 class="book_title">{{ book.title }}</h5>
+                <p class="book_author">{{ book.author.name }}</p>
+                <a href="{% url 'book_detail' book.pk %}">Детали</a>
+            </div>
+            <hr>
+        {% endif %}
+    {% endfor %}
+    </div>
+{% endblock %}

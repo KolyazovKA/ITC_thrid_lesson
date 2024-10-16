@@ -1,0 +1,21 @@
+{% extends '../base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block content %}
+    <h1>Книги</h1>
+    <div class="row">
+    {% for book in books %}
+        <div class="book_info">
+            <h5 class="book_title">{{ book.title }}</h5>
+            <p class = "book_author"> {{ book.author.name }}</p>
+            <a href="{% url 'book_detail' book.pk %}">Детали</a>
+        </div>
+        <hr>
+    {% endfor %}
+    <hr>
+    <hr>
+    <hr>
+    <a href="{% url 'new_books'%}">Новое</a>
+    </div>
+{% endblock %}
