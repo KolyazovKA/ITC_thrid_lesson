@@ -3,8 +3,11 @@ from datetime import datetime, timezone
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DetailView, UpdateView, DeleteView
+from django_filters.views import FilterView
+from books import filters
 
 from books.models import Book
+
 
 class BookListTemplateView(TemplateView):
     template_name = 'book_shelf/book_list.html'
@@ -14,10 +17,11 @@ class BookListTemplateView(TemplateView):
         context['books'] = Book.objects.all()
         return context
 
-class BookList(ListView):
+class BookList(FilterView):
     template_name = 'book_shelf/book_list.html'
     model = Book
     context_object_name = 'books'
+    filterset_class = filters.Books
 
 class BookDetail(DetailView):
     template_name = 'book_shelf/book_detail.html'

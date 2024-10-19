@@ -15,9 +15,9 @@ class Author(models.Model):
 
 
 class Book(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(verbose_name='Название', max_length=200)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name="books")
-    published_date = models.DateField()
+    published_date = models.DateField(verbose_name='Дата публикации')
 
     class Meta:
         verbose_name = "Книга"
@@ -28,7 +28,7 @@ class Book(models.Model):
 
 
 class Review(models.Model):
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="reviews")
+    book = models.ForeignKey(Book, verbose_name="Книга", on_delete=models.CASCADE, related_name="reviews")
     review_text = models.TextField()
     rating = models.IntegerField()
 
@@ -38,3 +38,16 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.book.title}: {self.rating}"
+
+
+class Storage(models.Model):
+    amount = models.PositiveIntegerField('Количество')
+    price = models.PositiveIntegerField('Стоимость')
+    book = models.OneToOneField(Book, on_delete=models.CASCADE, blank=True, null=True, verbose_name="Книга")
+
+    class Meta:
+        verbose_name = "Склад"
+        verbose_name_plural = "Слады"
+
+    def __str__(self):
+        return f"{self.book.title} ({self.amount}): {self.price} руб."

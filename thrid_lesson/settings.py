@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     "products",
     "books",
     "users",
+    "django_filters",
+    "django_bootstrap5",
+
 ]
 
 MIDDLEWARE = [
