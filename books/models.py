@@ -16,8 +16,8 @@ class Author(models.Model):
 
 class Book(models.Model):
     title = models.CharField(verbose_name='Название', max_length=200)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name="books")
-    published_date = models.DateField(verbose_name='Дата публикации')
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name="books", blank=True, null=True)
+    published_date = models.DateField(verbose_name='Дата публикации', blank=True, null=True)
 
     class Meta:
         verbose_name = "Книга"

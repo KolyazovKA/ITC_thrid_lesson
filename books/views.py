@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView, DetailView, UpdateView, DeleteView
+from django.views.generic import TemplateView, ListView, DetailView, UpdateView, DeleteView, CreateView
 from django_filters.views import FilterView
 from books import filters
 
@@ -35,6 +35,14 @@ class BookUpdate(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('book_detail', kwargs={'pk': self.object.pk})
+
+class BookCreate(CreateView):
+    template_name = 'book_shelf/book_form.html'
+    model = Book
+    fields = ['title', 'author', 'published_date']
+
+    def get_success_url(self):
+        return reverse_lazy('books_list')
 
 class BookDelete(DeleteView):
     template_name = 'book_shelf/book_confirm_delete.html'
