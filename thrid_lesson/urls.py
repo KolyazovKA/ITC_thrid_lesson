@@ -16,10 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf import settings
-from django.conf.urls.static import static
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from rest_framework.routers import DefaultRouter
 
 from books import views
+
+router = DefaultRouter()
+
+router.register('authors', views.AuthorAPI, basename='authors')
+router.register('books', views.BookAPI, basename='books')
+router.register('review', views.ReviewAPI, basename='review')
+router.register('storage', views.StorageAPI, basename='storage')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,5 +36,9 @@ urlpatterns = [
     path('book/<int:pk>/update/', views.BookUpdate.as_view(), name='book_update'),
     path('book/create/', views.BookCreate.as_view(), name='book_create'),
     path('book/<int:pk>/delete/', views.BookDelete.as_view(), name='book_delete'),
-    path('book/new/', views.NewBooks.as_view(), name='new_books')
-]
+    path('book/new/', views.NewBooks.as_view(), name='new_books'),
+
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema')),
+
+] + router.urls
